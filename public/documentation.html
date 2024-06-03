@@ -1,12 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>myFlix API Documentation</title>
+  <title>MyFlix API Documentation</title>
 </head>
 <body>
-    <h1>myFlix API Documentation</h1>
-    <p>This API provides users with access to information about different movies, directors, and genres. Users can sign up, update their personal information, and create a list of their favorite movies.</p>
+  <h1>MyFlix API Documentation</h1>
+
+  <h2>Endpoints</h2>
+
+  <h3>1. Return a list of ALL movies to the user</h3>
+  <p><strong>URL:</strong> /movies</p>
+  <p><strong>Method:</strong> GET</p>
+  <p><strong>Description:</strong> Returns a JSON object containing a list of all movies.</p>
+  <p><strong>Request Data:</strong> None</p>
+  <p><strong>Response Data:</strong> A JSON array of movie objects.</p>
+  <pre><code>GET /movies HTTP/1.1
+Host: localhost:8080
+
+Response:
+[
+  {
+    "id": 1,
+    "title": "Inception",
+    "genre": "Sci-Fi",
+    "director": "Christopher Nolan",
+    "description": "A mind-bending thriller",
+    "imageUrl": "",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "title": "The Dark Knight",
+    "genre": "Action",
+    "director": "Christopher Nolan",
+    "description": "Batman fights Joker",
+    "imageUrl": "",
+    "featured": true
+  }
+]</code></pre>
+
+  <h3>2. Return data about a single movie by title to the user</h3>
+  <p><strong>URL:</strong> /movies/:title</p>
+  <p><strong>Method:</strong> GET</p>
+  <p><strong>Description:</strong> Returns data about a single movie specified by title.</p>
+  <p><strong>Request Data:</strong> :title (parameter in URL)</p>
+  <p><strong>Response Data:</strong> A JSON object containing data about the specified movie.</p>
+  <pre><code>GET /movies/Inception HTTP/1.1
+Host: localhost:8080
+
+Response:
+{
+  "id": 1,
+  "title": "Inception",
+  "genre": "Sci-Fi",
+  "director": "Christopher Nolan",
+  "description": "A mind-bending thriller",
+  "imageUrl": "",
+  "featured": true
+}</code></pre>
+
+  <h3>3. Return data about a genre by name/title</h3>
+  <p><strong>URL:</strong> /genres/:name</p>
+  <p><strong>Method:</strong> GET</p>
+  <p><strong>Description:</strong> Returns data about a genre specified by name.</p>
+  <p><strong>Request Data:</strong> :name (parameter in URL)</p>
+  <p><strong>Response Data:</strong> A JSON object containing data about the specified genre.</p>
+  <pre><code>GET /genres/Sci-Fi HTTP/1.1
+Host: localhost:8080
+
+Response:
+{
+  "name": "Sci-Fi",
+  "description": "Science fiction is a genre that uses speculative, fictional science-based depictions of phenomena."
+}</code></pre>
+
+  <h3>4. Return data about a director by name</h3>
+  <p><strong>URL:</strong> /directors/:name</p>
+  <p><strong>Method:</strong> GET</p>
+  <p><strong>Description:</strong> Returns data about a director specified by name.</p>
+  <p><strong>Request Data:</strong> :name (parameter in URL)</p>
+  <p><strong>Response Data:</strong> A JSON object containing data about the specified director.</p>
+  <pre><code>GET /directors/Christopher%20Nolan HTTP/1.1
+Host: localhost:8080
+
+Response:
+{
+  "name": "Christopher Nolan",
+  "bio": "Christopher Edward Nolan is a British-American film director, producer, and screenwriter.",
+  "birthYear": 1970,
+  "deathYear": null
+}</code></pre>
+
+  <h3>5. Allow new users to register</h3>
+  <p><strong>URL:</strong> /users</p>
+  <p><strong>Method:</strong> POST</p>
+  <p><strong>Description:</strong> Registers a new user.</p>
+  <p><strong>Request Data:</strong> A JSON object containing user details.</p>
+  <pre><code>POST /users HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "username": "john_doe",
+  "password": "password123",
+  "email": "john@example.com",
+  "birthday": "1990-01-01"
+}
+
+Response:
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "birthday": "1990-01-01"
+}</code></pre>
+
+  <h3>6. Allow users to update their user info (username)</h3>
+  <p><strong>URL:</strong> /users/:username</p>
+  <p><strong>Method:</strong> PUT</p>
+  <p><strong>Description:</strong> Updates a user's information specified by username.</p>
+  <p><strong>Request Data:</strong> A JSON object containing updated user details.</p>
+  <pre><code>PUT /users/john_doe HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "password": "newpassword123",
+  "email": "newjohn@example.com",
+  "birthday": "1991-01-01"
+}
+
+Response:
+{
+  "username": "john_doe",
+  "email": "newjohn@example.com",
+  "birthday": "1991-01-01"
+}</code></pre>
+
+  <h3>7. Allow users to add a movie to their list of favorites</h3>
+  <p><strong>URL:</strong> /users/:username/movies/:movieID</p>
+  <p><strong>Method:</strong> POST</p>
+  <p><strong>Description:</strong> Adds a movie to a user's list of favorite movies.</p>
+  <p><strong>Request Data:</strong> None</p>
+  <p><strong>Response Data:</strong> A message indicating that the movie has been added to favorites.</p>
+  <pre><code>POST /users/john_doe/movies/1 HTTP/1.1
+Host: localhost:8080
+
+Response:
+Movie with ID 1 was added to user john_doe's favorite list.</code></pre>
+
+  <h3>8. Allow users to remove a movie from their list of favorites</h3>
+  <p><strong>URL:</strong> /users/:username/movies/:movieID</p>
+  <p><strong>Method:</strong> DELETE</p>
+  <p><strong>Description:</strong> Removes a movie from a user's list of favorite movies.</p>
+  <p><strong>Request Data:</strong> None</p>
+  <p><strong>Response Data:</strong> A message indicating that the movie has been removed from favorites.</p>
+  <pre><code>DELETE /users/john_doe/movies/1 HTTP/1.1
+Host: localhost:8080
+
+Response:
+Movie with ID 1 was removed from user john_doe's favorite list.</code></pre>
+
+  <h3>9. Allow existing users to deregister</h3>
+  <p><strong>URL:</strong> /users/:username</p>
+  <p><strong>Method:</strong> DELETE</p>
+  <p><strong>Description:</strong> Deregisters an existing user specified by username.</p>
+  <p><strong>Request Data:</strong> None</p>
+  <p><strong>Response Data:</strong> A message indicating that the user has been deregistered.</p>
+  <pre><code>DELETE /users/john_doe HTTP/1.1
+Host: localhost:8080
+
+Response:
+User john_doe was deregistered.</code></pre>
+
 </body>
 </html>
