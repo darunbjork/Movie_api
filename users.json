@@ -1,0 +1,35 @@
+[
+    {
+      "_id": {"$oid": "665f1dc55aaeea6d9ec23251"},
+      "Username": "davidcohen2580",
+      "Password": "test123",
+      "Email": "davidcohen2580@gmail.com",
+      "Birthday": {"$date": "1988-09-10T00:00:00Z"},
+      "FavoriteMovies": [{"$oid": "665f1d545aaeea6d9ec23241"}, {"$oid": "665f1d545aaeea6d9ec23241"}]
+    },
+    {
+      "_id": {"$oid": "665f1dc55aaeea6d9ec23252"},
+      "Username": "larissamayer",
+      "Password": "password555",
+      "Email": "larissalove@yahoo.com",
+      "Birthday": {"$date": "1995-05-04T00:00:00Z"},
+      "FavoriteMovies": []
+    },
+    {
+      "_id": {"$oid": "665f1dc55aaeea6d9ec23254"},
+      "Username": "jane_doe",
+      "Password": "janepass",
+      "Email": "jane.doe@example.com",
+      "Birthday": {"$date": "1990-10-10T00:00:00Z"},
+      "FavoriteMovies": []
+    },
+    {
+      "_id": {"$oid": "665f1dc55aaeea6d9ec23255"},
+      "Username": "richard_roe",
+      "Password": "richardspass",
+      "Email": "richard.roe@example.com",
+      "Birthday": {"$date": "1985-02-19T00:00:00Z"},
+      "FavoriteMovies": []
+    }
+  ]
+  
