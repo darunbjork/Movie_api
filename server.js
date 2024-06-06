@@ -3,6 +3,8 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const passport = require('passport');
+require('./passport'); // Your local passport file
 const app = express();
 
 app.use(express.json());
@@ -23,6 +25,9 @@ mongoose.connect(process.env.MONGODB_URI)
     console.error('Error connecting to the database', err);
   });
 
+// Auth route
+let auth = require('./auth')(app);
+
 // Routes
 // Welcome message
 app.get('/', (req, res) => {
@@ -30,7 +35,7 @@ app.get('/', (req, res) => {
 });
 
 // Return a list of ALL movies to the user
-app.get('/movies', async (req, res, next) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find();
     res.status(200).json(movies);
@@ -40,7 +45,7 @@ app.get('/movies', async (req, res, next) => {
 });
 
 // Return data about a single movie by title
-app.get('/movies/title/:Title', async (req, res, next) => {
+app.get('/movies/title/:Title', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movie = await Movies.findOne({ Title: req.params.Title });
     if (movie) {
@@ -54,7 +59,7 @@ app.get('/movies/title/:Title', async (req, res, next) => {
 });
 
 // Return data about movies by genre
-app.get('/movies/genre/:Genre', async (req, res, next) => {
+app.get('/movies/genre/:Genre', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find({ 'Genre.Name': req.params.Genre });
     if (movies.length > 0) {
@@ -68,7 +73,7 @@ app.get('/movies/genre/:Genre', async (req, res, next) => {
 });
 
 // Return data about movies by director
-app.get('/movies/director/:Director', async (req, res, next) => {
+app.get('/movies/director/:Director', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find({ 'Director.Name': req.params.Director });
     if (movies.length > 0) {
@@ -80,6 +85,26 @@ app.get('/movies/director/:Director', async (req, res, next) => {
     next(err);
   }
 });
+
+// Fetch user profile details
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    // Ensure the user can only access their own profile
+    if (req.user.Username !== req.params.Username) {
+      return res.status(403).json({ error: 'Permission denied' });
+    }
+
+    const user = await Users.findOne({ Username: req.params.Username });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ error: `${req.params.Username} not found` });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 // Allow new users to register
 app.post('/users', async (req, res, next) => {
@@ -102,8 +127,14 @@ app.post('/users', async (req, res, next) => {
 });
 
 // Allow users to update their user info (username)
-app.put('/users/:Username', async (req, res, next) => {
+// Allow users to update their user info (username)
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
+    // Check if the username in the JWT matches the username in the URL
+    if (req.user.Username !== req.params.Username) {
+      return res.status(403).json({ error: 'Permission denied' });
+    }
+
     const updatedUser = await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -116,6 +147,7 @@ app.put('/users/:Username', async (req, res, next) => {
       },
       { new: true }
     );
+
     if (updatedUser) {
       res.status(200).json(updatedUser);
     } else {
@@ -126,8 +158,12 @@ app.put('/users/:Username', async (req, res, next) => {
   }
 });
 
+
 // Allow users to add a movie to their list of favorites
-app.post('/users/:Username/movies/:MovieID', async (req, res, next) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  if (req.user.Username !== req.params.Username) {
+    return res.status(400).send('Permission denied');
+  }
   try {
     const updatedUser = await Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -147,7 +183,10 @@ app.post('/users/:Username/movies/:MovieID', async (req, res, next) => {
 });
 
 // Allow users to remove a movie from their list of favorites
-app.delete('/users/:Username/movies/:MovieID', async (req, res, next) => {
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  if (req.user.Username !== req.params.Username) {
+    return res.status(400).send('Permission denied');
+  }
   try {
     const updatedUser = await Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -167,7 +206,10 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res, next) => {
 });
 
 // Allow existing users to deregister
-app.delete('/users/:Username', async (req, res, next) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  if (req.user.Username !== req.params.Username) {
+    return res.status(400).send('Permission denied');
+  }
   try {
     const user = await Users.findOneAndDelete({ Username: req.params.Username });
     if (!user) {
