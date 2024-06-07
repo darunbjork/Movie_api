@@ -6,8 +6,9 @@ const Models = require('./models.js');
 const passport = require('passport');
 const cors = require('cors');
 const { check, validationResult } = require('express-validator');
-require('./passport'); // Your local passport file
+require('./passport'); // local passport file
 const app = express();
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +20,30 @@ app.use(morgan('common')); // Log requests using Morgan
 app.use(express.static('public')); // Serve static files from the 'public' directory
 app.use(cors()); // Enable CORS
 
+ // Define the allowed origins
+ const allowedOrigins = [ 
+  'http://localhost:8080', 
+  'http://testsite.com', 
+  'http://localhost:1234', 
+  'https://silverscreenhub.netlify.app', 
+  'http://localhost:4200'
+];
+
+// CORS configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
+// Enable CORS using the configured options
+app.use(cors(corsOptions));
+
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
@@ -27,6 +52,7 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => {
     console.error('Error connecting to the database', err);
   });
+
 
 // Auth route
 let auth = require('./auth')(app);
