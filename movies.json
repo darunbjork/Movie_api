@@ -1,1 +1,212 @@
-[{"_id":{"$oid":"665f1d545aaeea6d9ec23241"},"Title":"Inception","Description":"A skilled thief is given a chance at redemption if he can successfully perform inception.","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Christopher Nolan","Bio":"Christopher Edward Nolan is an English film director, producer, and screenwriter."},"ImagePath":"inception.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23242"},"Title":"The Dark Knight","Description":"Batman fights Joker","Genre":{"Name":"Action","Description":"Action film is a film genre in which the protagonist is thrust into a series of events that typically include violence, extended fighting, physical feats, and frantic chases."},"Director":{"Name":"Christopher Nolan","Bio":"Christopher Edward Nolan is an English film director, producer, and screenwriter."},"ImagePath":"dark_knight.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23243"},"Title":"Interstellar","Description":"A journey through space and time","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Christopher Nolan","Bio":"Christopher Edward Nolan is an English film director, producer, and screenwriter."},"ImagePath":"interstellar.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23244"},"Title":"Pulp Fiction","Description":"A series of interconnected stories","Genre":{"Name":"Crime","Description":"Crime film is a genre that revolves around the actions of a criminal mastermind or a crime s a genre that relies on the emotional and relational development of realistic characters."},"Director":{"Name":"Robert Zemeckis","Bio":"Robert Lee Zemeckis is an American film director, producer, and screenwriter."},"ImagePath":"forrest_gump.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23247"},"Title":"The Matrix","Description":"A computer hacker learns about the true nature of his reality","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Lana Wachowski","Bio":"Lana Wachowski is an American filmmaker and half of the Wachowskis, known for directing The Matrix series."},"ImagePath":"the_matrix.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23248"},"Title":"The Lord of the Rings: The Fellowship of the Ring","Description":"A hobbit and his friends set out to destroy a powerful ring","Genre":{"Name":"Fantasy","Description":"Fantasy film is a genre that uses magic and other supernatural forms as a primary element of plot, theme, and/or setting."},"Director":{"Name":"Peter Jackson","Bio":"Sir Peter Robert Jackson is a New Zealand film director, screenwriter, and film producer."},"ImagePath":"lotr_fellowship.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23249"},"Title":"The Shawshank Redemption","Description":"Two imprisoned men bond over a number of years","Genre":{"Name":"Drama","Description":"Drama film is a genre that relies on the emotional and relational development of realistic characters."},"Director":{"Name":"Frank Darabont","Bio":"Frank Arpad Darabont is a Hungarian-American film director, screenwriter, and producer."},"ImagePath":"shawshank_redemption.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec2324a"},"Title":"The Godfather","Description":"The aging patriarch of an organized crime dynasty transfers control to his reluctant son","Genre":{"Name":"Crime","Description":"Crime film is a genre that revolves around the actions of a criminal mastermind or a crime spree."},"Director":{"Name":"Francis Ford Coppola","Bio":"Francis Ford Coppola is an American film director, producer, and screenwriter."},"ImagePath":"godfather.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec2324b"},"Title":"The Godfather: Part II","Description":"The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on the family crime syndicate.","Genre":{"Name":"Crime","Description":"Crime film is a genre that revolves around the actions of a criminal mastermind or a crime spree."},"Director":{"Name":"Francis Ford Coppola","Bio":"Francis Ford Coppola is an American film director, producer, and screenwriter."},"ImagePath":"godfather_2.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec2324c"},"Title":"The Silence of the Lambs","Description":"A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.","Genre":{"Name":"Thriller","Description":"Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."},"Director":{"Name":"Jonathan Demme","Bio":"Robert Jonathan Demme was an American director, producer, and screenwriter."},"ImagePath":"silenceofthelambs.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec2324d"},"Title":"Schindler's List","Description":"In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.","Genre":{"Name":"Drama","Description":"Drama film is a genre that relies on the emotional and relational development of realistic characters."},"Director":{"Name":"Steven Spielberg","Bio":"Steven Allan Spielberg is an American film director, producer, and screenwriter."},"ImagePath":"schindlers_list.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec2324e"},"Title":"Goodfellas","Description":"The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito.","Genre":{"Name":"Crime","Description":"Crime film is a genre that revolves around the actions of a criminal mastermind or a crime spree."},"Director":{"Name":"Martin Scorsese","Bio":"Martin Charles Scorsese is an American film director, producer, screenwriter, and actor."},"ImagePath":"goodfellas.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec2324f"},"Title":"The Pianist","Description":"A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.","Genre":{"Name":"Biography","Description":"Biographical film, or biopic, is a genre of film that dramatizes the life of a non-fictional or historically-based person or people."},"Director":{"Name":"Roman Polanski","Bio":"Roman Polanski is a Polish-French film director, producer, and screenwriter."},"ImagePath":"the_pianist.png","Featured":true},{"_id":{"$oid":"665f1d545aaeea6d9ec23250"},"Title":"The Empire Strikes Back","Description":"The second film in the original Star Wars trilogy.","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Irvin Kershner","Bio":"Irvin Kershner was an American film director and actor, known for directing The Empire Strikes Back."},"ImagePath":"empire_strikes_back.png","Featured":true}]
+[
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23241"},
+    "Title": "Inception",
+    "Description": "A skilled thief is given a chance at redemption if he can successfully perform inception.",
+    "Genre": {
+      "Name": "Sci-Fi",
+      "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+    },
+    "Director": {
+      "Name": "Christopher Nolan",
+      "Bio": "Christopher Edward Nolan is an English film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23242"},
+    "Title": "The Dark Knight",
+    "Description": "Batman fights Joker",
+    "Genre": {
+      "Name": "Action",
+      "Description": "Action film is a film genre in which the protagonist is thrust into a series of events that typically include violence, extended fighting, physical feats, and frantic chases."
+    },
+    "Director": {
+      "Name": "Christopher Nolan",
+      "Bio": "Christopher Edward Nolan is an English film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/8/8a/Dark_Knight.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23243"},
+    "Title": "Interstellar",
+    "Description": "A journey through space and time",
+    "Genre": {
+      "Name": "Sci-Fi",
+      "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+    },
+    "Director": {
+      "Name": "Christopher Nolan",
+      "Bio": "Christopher Edward Nolan is an English film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23244"},
+    "Title": "Pulp Fiction",
+    "Description": "A series of interconnected stories",
+    "Genre": {
+      "Name": "Crime",
+      "Description": "Crime film is a genre that revolves around the actions of a criminal mastermind or a crime s a genre that relies on the emotional and relational development of realistic characters."
+    },
+    "Director": {
+      "Name": "Quentin Tarantino",
+      "Bio": "Quentin Jerome Tarantino is an American film director, screenwriter, producer, and actor."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/8/82/Pulp_Fiction_cover.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23247"},
+    "Title": "The Matrix",
+    "Description": "A computer hacker learns about the true nature of his reality",
+    "Genre": {
+      "Name": "Sci-Fi",
+      "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+    },
+    "Director": {
+      "Name": "Lana Wachowski",
+      "Bio": "Lana Wachowski is an American filmmaker and half of the Wachowskis, known for directing The Matrix series."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23248"},
+    "Title": "The Lord of the Rings: The Fellowship of the Ring",
+    "Description": "A hobbit and his friends set out to destroy a powerful ring",
+    "Genre": {
+      "Name": "Fantasy",
+      "Description": "Fantasy film is a genre that uses magic and other supernatural forms as a primary element of plot, theme, and/or setting."
+    },
+    "Director": {
+      "Name": "Peter Jackson",
+      "Bio": "Sir Peter Robert Jackson is a New Zealand film director, screenwriter, and film producer."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/0/0c/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23249"},
+    "Title": "The Shawshank Redemption",
+    "Description": "Two imprisoned men bond over a number of years",
+    "Genre": {
+      "Name": "Drama",
+      "Description": "Drama film is a genre that relies on the emotional and relational development of realistic characters."
+    },
+    "Director": {
+      "Name": "Frank Darabont",
+      "Bio": "Frank Arpad Darabont is a Hungarian-American film director, screenwriter, and producer."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec2324a"},
+    "Title": "The Godfather",
+    "Description": "The aging patriarch of an organized crime dynasty transfers control to his reluctant son",
+    "Genre": {
+      "Name": "Crime",
+      "Description": "Crime film is a genre that revolves around the actions of a criminal mastermind or a crime spree."
+    },
+    "Director": {
+      "Name": "Francis Ford Coppola",
+      "Bio": "Francis Ford Coppola is an American film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec2324b"},
+    "Title": "The Godfather: Part II",
+    "Description": "The early life and career of Vito Corleone in 1920s New York is portrayed while his son, Michael, expands and tightens his grip on the family crime syndicate.",
+    "Genre": {
+      "Name": "Crime",
+      "Description": "Crime film is a genre that revolves around the actions of a criminal mastermind or a crime spree."
+    },
+    "Director": {
+      "Name": "Francis Ford Coppola",
+      "Bio": "Francis Ford Coppola is an American film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/0/03/Godfather_part_ii.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec2324c"},
+    "Title": "The Silence of the Lambs",
+    "Description": "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.",
+    "Genre": {
+      "Name": "Thriller",
+      "Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
+    },
+    "Director": {
+      "Name": "Jonathan Demme",
+      "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/8/86/The_Silence_of_the_Lambs_poster.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec2324d"},
+    "Title": "Schindler's List",
+    "Description": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+    "Genre": {
+      "Name": "Drama",
+      "Description": "Drama film is a genre that relies on the emotional and relational development of realistic characters."
+    },
+    "Director": {
+      "Name": "Steven Spielberg",
+      "Bio": "Steven Allan Spielberg is an American film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec2324e"},
+    "Title": "Goodfellas",
+    "Description": "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito.",
+    "Genre": {
+      "Name": "Crime",
+      "Description": "Crime film is a genre that revolves around the actions of a criminal mastermind or a crime spree."
+    },
+    "Director": {
+      "Name": "Martin Scorsese",
+      "Bio": "Martin Charles Scorsese is an American film director, producer, screenwriter, and actor."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/7/7b/Goodfellas.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec2324f"},
+    "Title": "The Pianist",
+    "Description": "A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.",
+    "Genre": {
+      "Name": "Biography",
+      "Description": "Biographical film, or biopic, is a genre of film that dramatizes the life of a non-fictional or historically-based person or people."
+    },
+    "Director": {
+      "Name": "Roman Polanski",
+      "Bio": "Roman Polanski is a Polish-French film director, producer, and screenwriter."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/a/a6/The_Pianist_movie.jpg",
+    "Featured": true
+  },
+  {
+    "_id": {"$oid": "665f1d545aaeea6d9ec23250"},
+    "Title": "The Empire Strikes Back",
+    "Description": "The second film in the original Star Wars trilogy.",
+    "Genre": {
+      "Name": "Sci-Fi",
+      "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+    },
+    "Director": {
+      "Name": "Irvin Kershner",
+      "Bio": "Irvin Kershner was an American film director and actor, known for directing The Empire Strikes Back."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/3/3c/SW_-_Empire_Strikes_Back.jpg",
+    "Featured": true
+  }
+]
