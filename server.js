@@ -217,22 +217,29 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
   }
 });
 
+
 app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
+    console.log(`Incoming request for /users/${req.params.Username}/movies`);
     if (req.user.Username !== req.params.Username) {
+      console.log('Permission denied');
       return res.status(403).json({ error: 'Permission denied' });
     }
 
     const user = await Users.findOne({ Username: req.params.Username }).populate('FavoriteMovies');
     if (user) {
+      console.log(`User found: ${user.Username}`);
       res.status(200).json(user.FavoriteMovies);
     } else {
+      console.log(`User ${req.params.Username} not found`);
       res.status(404).json({ error: `${req.params.Username} not found` });
     }
   } catch (err) {
+    console.error('Error:', err);
     next(err);
   }
 });
+
 
 
 // Allow users to remove a movie from their list of favorites
