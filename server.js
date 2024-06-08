@@ -217,6 +217,24 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
   }
 });
 
+app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    if (req.user.Username !== req.params.Username) {
+      return res.status(403).json({ error: 'Permission denied' });
+    }
+
+    const user = await Users.findOne({ Username: req.params.Username }).populate('FavoriteMovies');
+    if (user) {
+      res.status(200).json(user.FavoriteMovies);
+    } else {
+      res.status(404).json({ error: `${req.params.Username} not found` });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 // Allow users to remove a movie from their list of favorites
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
