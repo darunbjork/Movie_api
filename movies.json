@@ -1,1 +1,182 @@
-[{"_id":{"$oid":"666489294bee7f1686337a12"},"Title":"Inception","Description":"A skilled thief is given a chance at redemption if he can successfully perform inception.","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Christopher Nolan","Bio":"Christopher Edward Nolan is an English film director, producer, and screenwriter."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a13"},"Title":"The Matrix","Description":"A computer hacker learns about the true nature of his reality and his role in the war against its controllers.","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Lana Wachowski, Lilly Wachowski","Bio":"Lana Wachowski and Lilly Wachowski, also known as the Wachowskis, are American film and TV directors, writers, and producers."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a14"},"Title":"The Dark Knight","Description":"Batman sets out to dismantle the remaining criminal organizations that plague Gotham.","Genre":{"Name":"Action","Description":"Action film, a genre where the protagonist is thrust into a series of events that typically involve violence, extended fighting, physical feats, and frantic chases."},"Director":{"Name":"Christopher Nolan","Bio":"Christopher Edward Nolan is an English film director, producer, and screenwriter."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/8/8a/Dark_Knight.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a15"},"Title":"Interstellar","Description":"A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"Christopher Nolan","Bio":"Christopher Edward Nolan is an English film director, producer, and screenwriter."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a16"},"Title":"Fight Club","Description":"An insomniac office worker and a devil-may-care soap maker form an underground fight club.","Genre":{"Name":"Drama","Description":"Drama film, a genre that relies on the emotional and relational development of realistic characters."},"Director":{"Name":"David Fincher","Bio":"David Andrew Leo Fincher is an American film director."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/f/fc/Fight_Club_poster.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a17"},"Title":"Pulp Fiction","Description":"The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.","Genre":{"Name":"Crime","Description":"Crime film, a genre that revolves around the actions of criminals and the detectives or law enforcement agents who seek to bring them to justice."},"Director":{"Name":"Quentin Tarantino","Bio":"Quentin Jerome Tarantino is an American film director, screenwriter, producer, author, and actor."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/8/82/Pulp_Fiction_cover.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a18"},"Title":"Forrest Gump","Description":"The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an IQ of 75.","Genre":{"Name":"Drama","Description":"Drama film, a genre that relies on the emotional and relational development of realistic characters."},"Director":{"Name":"Robert Zemeckis","Bio":"Robert Lee Zemeckis is an American film director, producer, and screenwriter."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a19"},"Title":"The Shawshank Redemption","Description":"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.","Genre":{"Name":"Drama","Description":"Drama film, a genre that relies on the emotional and relational development of realistic characters."},"Director":{"Name":"Frank Darabont","Bio":"Frank Árpád Darabont is an American film director, screenwriter, and producer."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a1a"},"Title":"The Godfather","Description":"The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.","Genre":{"Name":"Crime","Description":"Crime film, a genre that revolves around the actions of criminals and the detectives or law enforcement agents who seek to bring them to justice."},"Director":{"Name":"Francis Ford Coppola","Bio":"Francis Ford Coppola is an American film director, producer, and screenwriter."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a1b"},"Title":"The Lord of the Rings: The Fellowship of the Ring","Description":"A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.","Genre":{"Name":"Fantasy","Description":"Fantasy film, a genre that uses magic and other supernatural forms as a primary element of plot, theme, or setting."},"Director":{"Name":"Peter Jackson","Bio":"Sir Peter Robert Jackson is a New Zealand film director, screenwriter, and film producer."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/0/0c/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a1c"},"Title":"Star Wars: Episode IV - A New Hope","Description":"Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station.","Genre":{"Name":"Sci-Fi","Description":"Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."},"Director":{"Name":"George Lucas","Bio":"George Walton Lucas Jr. is an American film director, producer, screenwriter, and entrepreneur."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/8/87/StarWarsMoviePoster1977.jpg","Featured":true},{"_id":{"$oid":"666489294bee7f1686337a1d"},"Title":"Jurassic Park","Description":"During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok.","Genre":{"Name":"Adventure","Description":"Adventure film, a genre where the protagonist goes on an exciting, unusual journey or quest."},"Director":{"Name":"Steven Spielberg","Bio":"Steven Allan Spielberg is an American film director, producer, and screenwriter."},"ImagePath":"https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg","Featured":true}]
+[
+    {
+        "_id": { "$oid": "666489294bee7f1686337a12" },
+        "Title": "Inception",
+        "Description": "A skilled thief is given a chance at redemption if he can successfully perform inception.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+        },
+        "Director": {
+            "Name": "Christopher Nolan",
+            "Bio": "Christopher Edward Nolan is an English film director, producer, and screenwriter."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a13" },
+        "Title": "The Matrix",
+        "Description": "A computer hacker learns about the true nature of his reality and his role in the war against its controllers.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+        },
+        "Director": {
+            "Name": "Lana Wachowski, Lilly Wachowski",
+            "Bio": "Lana Wachowski and Lilly Wachowski, also known as the Wachowskis, are American film and TV directors, writers, and producers."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a15" },
+        "Title": "Interstellar",
+        "Description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+        },
+        "Director": {
+            "Name": "Christopher Nolan",
+            "Bio": "Christopher Edward Nolan is an English film director, producer, and screenwriter."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a16" },
+        "Title": "Fight Club",
+        "Description": "An insomniac office worker and a devil-may-care soap maker form an underground fight club.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama film, a genre that relies on the emotional and relational development of realistic characters."
+        },
+        "Director": {
+            "Name": "David Fincher",
+            "Bio": "David Andrew Leo Fincher is an American film director."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/f/fc/Fight_Club_poster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a18" },
+        "Title": "Forrest Gump",
+        "Description": "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man with an IQ of 75.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama film, a genre that relies on the emotional and relational development of realistic characters."
+        },
+        "Director": {
+            "Name": "Robert Zemeckis",
+            "Bio": "Robert Lee Zemeckis is an American film director, producer, and screenwriter."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a19" },
+        "Title": "The Shawshank Redemption",
+        "Description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+        "Genre": {
+            "Name": "Drama",
+            "Description": "Drama film, a genre that relies on the emotional and relational development of realistic characters."
+        },
+        "Director": {
+            "Name": "Frank Darabont",
+            "Bio": "Frank Árpád Darabont is an American film director, screenwriter, and producer."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a1a" },
+        "Title": "The Godfather",
+        "Description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+        "Genre": {
+            "Name": "Crime",
+            "Description": "Crime film, a genre that revolves around the actions of criminals and the detectives or law enforcement agents who seek to bring them to justice."
+        },
+        "Director": {
+            "Name": "Francis Ford Coppola",
+            "Bio": "Francis Ford Coppola is an American film director, producer, and screenwriter."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a1c" },
+        "Title": "Star Wars: Episode IV - A New Hope",
+        "Description": "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee, and two droids to save the galaxy from the Empire's world-destroying battle station.",
+        "Genre": {
+            "Name": "Sci-Fi",
+            "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+        },
+        "Director": {
+            "Name": "George Lucas",
+            "Bio": "George Walton Lucas Jr. is an American film director, producer, screenwriter, and entrepreneur."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/8/87/StarWarsMoviePoster1977.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a1d" },
+        "Title": "Jurassic Park",
+        "Description": "During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok.",
+        "Genre": {
+            "Name": "Adventure",
+            "Description": "Adventure film, a genre where the protagonist goes on an exciting, unusual journey or quest."
+        },
+        "Director": {
+            "Name": "Steven Spielberg",
+            "Bio": "Steven Allan Spielberg is an American film director, producer, and screenwriter."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/e/e7/Jurassic_Park_poster.jpg",
+        "Featured": true
+    },
+    {
+        "_id": { "$oid": "666489294bee7f1686337a1e" },
+        "Title": "The Lion King",
+        "Description": "A young lion prince flees his kingdom only to learn the true meaning of responsibility and bravery.",
+        "Genre": {
+            "Name": "Animation",
+            "Description": "Animation film, a genre that involves the use of animated images to tell a story."
+        },
+        "Director": {
+            "Name": "Roger Allers, Rob Minkoff",
+            "Bio": "Roger Allers and Rob Minkoff are American film directors known for directing animated films."
+        },
+        "ImagePath": "https://upload.wikimedia.org/wikipedia/en/3/3d/The_Lion_King_poster.jpg",
+        "Featured": true
+    },
+{
+    "_id": { "$oid": "666489294bee7f1686337a1f" },
+    "Title": "Avatar",
+    "Description": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
+    "Genre": {
+        "Name": "Sci-Fi",
+        "Description": "Science fiction film, a genre that uses speculative, fictional science-based depictions of phenomena that are not fully accepted by mainstream science."
+    },
+    "Director": {
+        "Name": "James Cameron",
+        "Bio": "James Francis Cameron is a Canadian filmmaker and environmentalist."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/d/d6/Avatar_%282009_film%29_poster.jpg",
+    "Featured": true
+},
+{
+    "_id": { "$oid": "666489294bee7f1686337a20" },
+    "Title": "Gladiator",
+    "Description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+    "Genre": {
+        "Name": "Action",
+        "Description": "Action film, a genre where the protagonist is thrust into a series of events that typically involve violence, extended fighting, physical feats, and frantic chases."
+    },
+    "Director": {
+        "Name": "Ridley Scott",
+        "Bio": "Sir Ridley Scott is an English film director and producer."
+    },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/f/fb/Gladiator_%282000_film_poster%29.png",
+    "Featured": true
+}
+]
