@@ -218,7 +218,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 });
 
 
-app.get('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     console.log(`Incoming request for /users/${req.params.Username}/movies`);
     if (req.user.Username !== req.params.Username) {
@@ -239,6 +239,7 @@ app.get('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sessi
     next(err);
   }
 });
+
 
 
 
