@@ -11,30 +11,35 @@ let generateJWTToken = (user) => {
     algorithm: 'HS256', // This is the algorithm used to “sign” or encode the values of the JWT
   });
 };
+
 /* POST login. */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
     console.log('Login request received:', req.body);  // Log received data
     passport.authenticate('local', { session: false }, (error, user, info) => {
       if (error) {
+        console.log('Authentication error:', error);  // Log error details
         return res.status(400).json({
           message: 'An error occurred during login',
           error: error.message,
         });
       }
       if (!user) {
+        console.log('Authentication failed: Invalid username or password');  // Log failure details
         return res.status(400).json({
           message: 'Invalid username or password',
         });
       }
       req.login(user, { session: false }, (error) => {
         if (error) {
+          console.log('Login failed:', error);  // Log login error details
           return res.status(500).json({ message: 'Login failed', error: error.message });
         }
         let token = generateJWTToken(user.toJSON());
+        console.log('Login successful:', user);  // Log successful login
         return res.json({ user, token });
       });
     })(req, res);
   });
+};
   
-}  

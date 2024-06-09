@@ -168,29 +168,38 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-], async (req, res, next) => {
+], async (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
+
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
-  await Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    {
-      $set: {
-        Username: req.body.Username,
-        Password: Users.hashPassword(req.body.Password),
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
-      }
-    },
-    { new: true }
-  )
-    .then((updatedUser) => { res.json(updatedUser); })
-    .catch((err) => { res.status(500).send('Error: ' + err); });
+
+  const updateFields = {
+    Username: req.body.Username,
+    Email: req.body.Email,
+    Birthday: req.body.Birthday
+  };
+
+  if (req.body.Password) {
+    updateFields.Password = Users.hashPassword(req.body.Password);
+  }
+
+  try {
+    const updatedUser = await Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      { $set: updateFields },
+      { new: true }
+    );
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).send('Error: ' + err);
+  }
 });
+
 
 // Allow users to add a movie to their list of favorites
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
