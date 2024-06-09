@@ -163,42 +163,38 @@ app.post('/users', [
 });
 
 // Allow users to update their user info (username)
+// Ensure the password is hashed before storing it in the database
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-], async (req, res) => {
+], async (req, res, next) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
-
-  const updateFields = {
-    Username: req.body.Username,
-    Email: req.body.Email,
-    Birthday: req.body.Birthday
-  };
-
-  if (req.body.Password) {
-    updateFields.Password = Users.hashPassword(req.body.Password);
-  }
-
-  try {
-    const updatedUser = await Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      { $set: updateFields },
-      { new: true }
-    );
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(500).send('Error: ' + err);
-  }
+  const hashedPassword = Users.hashPassword(req.body.Password);
+  await Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username,
+        Password: hashedPassword,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }
+    },
+    { new: true }
+  )
+    .then((updatedUser) => { res.json(updatedUser); })
+    .catch((err) => { res.status(500).send('Error: ' + err); });
 });
+
+
 
 
 // Allow users to add a movie to their list of favorites
