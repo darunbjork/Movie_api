@@ -138,7 +138,7 @@ app.post('/users', [
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-], async (req, res, next) => {
+], async (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -155,12 +155,13 @@ app.post('/users', [
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
-          .then((user) => { res.status(201).json(user) })
+          .then((user) => { res.status(201).json(user); })
           .catch((error) => { res.status(500).send('Error: ' + error); });
       }
     })
     .catch((error) => { res.status(500).send('Error: ' + error); });
 });
+
 
 // Allow users to update their user info (username)
 // Ensure the password is hashed before storing it in the database
@@ -169,7 +170,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-], async (req, res, next) => {
+], async (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -177,13 +178,15 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
-  const hashedPassword = Users.hashPassword(req.body.Password);
+  
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
       $set: {
         Username: req.body.Username,
-        Password: hashedPassword,
+        Password: hashedPassword,  // Ensure password is hashed
         Email: req.body.Email,
         Birthday: req.body.Birthday
       }
@@ -193,6 +196,8 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
     .then((updatedUser) => { res.json(updatedUser); })
     .catch((err) => { res.status(500).send('Error: ' + err); });
 });
+
+
 
 
 

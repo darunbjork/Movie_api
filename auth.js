@@ -15,33 +15,34 @@ let generateJWTToken = (user) => {
 /* POST login. */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
-    console.log('Login request received:', req.body);  // Log received data
+    console.log('Login request received:', req.body);
     passport.authenticate('local', { session: false }, (error, user, info) => {
       if (error) {
-        console.log('Authentication error:', error);  // Log error details
+        console.log('Authentication error:', error);
         return res.status(400).json({
           message: 'An error occurred during login',
           error: error.message,
         });
       }
       if (!user) {
-        console.log('Authentication failed: Invalid username or password');  // Log failure details
+        console.log('Authentication failed: Invalid username or password');
         return res.status(400).json({
           message: 'Invalid username or password',
         });
       }
       req.login(user, { session: false }, (error) => {
         if (error) {
-          console.log('Login failed:', error);  // Log login error details
+          console.log('Login failed:', error);
           return res.status(500).json({ message: 'Login failed', error: error.message });
         }
         let token = generateJWTToken(user.toJSON());
-        console.log('Login successful:', user);  // Log successful login
+        console.log('Login successful:', user);
         return res.json({ user, token });
       });
     })(req, res);
   });
 };
+
 
 
   
