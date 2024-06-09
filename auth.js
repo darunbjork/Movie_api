@@ -11,10 +11,10 @@ let generateJWTToken = (user) => {
     algorithm: 'HS256', // This is the algorithm used to “sign” or encode the values of the JWT
   });
 };
-
 /* POST login. */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
+    console.log('Login request received:', req.body);  // Log received data
     passport.authenticate('local', { session: false }, (error, user, info) => {
       if (error) {
         return res.status(400).json({
@@ -36,4 +36,5 @@ module.exports = (router) => {
       });
     })(req, res);
   });
-};
+  
+}  

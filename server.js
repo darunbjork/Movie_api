@@ -15,17 +15,13 @@ app.use(express.urlencoded({ extended: true }));
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// Middleware
-app.use(morgan('common')); // Log requests using Morgan
-app.use(express.static('public')); // Serve static files from the 'public' directory
 
 
 // Define the allowed origins
 const allowedOrigins = [
   'http://localhost:8080',
   'http://testsite.com',
-  'http://localhost:1234',
-  'https://silverscreenhub.netlify.app',
+  'http://http://localhost:1234',
   'http://localhost:4200'
 ];
 
@@ -39,9 +35,11 @@ const corsOptions = {
     }
   },
 };
+// Middleware
+app.use(morgan('common')); // Log requests using Morgan
+app.use(express.static('public')); // Serve static files from the 'public' directory
+app.use(cors(corsOptions)); // Enable CORS using the configured options
 
-// Enable CORS using the configured options
-app.use(cors(corsOptions));
 
 
 // Connect to MongoDB
