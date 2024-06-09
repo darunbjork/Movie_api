@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `myFlix` API is a backend service for a movie application. It allows users to access information about movies, genres, and directors, as well as manage their user profiles and favorite movies. This API is built using Node.js, Express, and MongoDB.
+The myFlix API is a backend service for a movie application. It allows users to access information about movies, genres, and directors, as well as manage their user profiles and favorite movies. This API is built using Node.js, Express, and MongoDB.
 
 ## Features
 
@@ -41,86 +41,105 @@ The `myFlix` API is a backend service for a movie application. It allows users t
    ```bash
    git clone https://github.com/example/movie_api.git
    cd movie_api
+
    ```
 
-Install dependencies:
+2. Install dependencies:
+   npm install
 
-npm install
+3. Set up environment variables:
+   Create a .env file in the root directory and add the following variables:
 
-Set up environment variables:
-
-Create a .env file in the root directory and add the following variables:
 MONGODB_URI=your_mongodb_connection_string
 PORT=your_port_number (default: 8080)
 
-Run the application:
-npm start
-
-The server should now be running on the specified port.
+4. Run the application:
+   npm start
+   The server should now be running on the specified port.
 
 API Endpoints
 
 Movies
 Get all movies
 
-GET /movies
+URL: /movies
+Method: GET
 Requires JWT authentication
 Get movie by title
 
-GET /movies/title/:Title
+URL: /movies/title/:Title
+Method: GET
 Requires JWT authentication
 Get movies by genre
 
-GET /movies/genre/:Genre
+URL: /movies/genre/:Genre
+Method: GET
 Requires JWT authentication
 Get movies by director
 
-GET /movies/director/:Director
+URL: /movies/director/:Director
+Method: GET
 Requires JWT authentication
 Users
 Get user profile
 
-GET /users/:Username
+URL: /users/:Username
+Method: GET
 Requires JWT authentication
 Register a new user
 
-POST /users
+URL: /users
+Method: POST
 Request body: { Username, Password, Email, Birthday }
 Update user profile
 
-PUT /users/:Username
+URL: /users/:Username
+Method: PUT
 Requires JWT authentication
 Request body: { Username, Password, Email, Birthday }
 Add a movie to user's favorites
 
-POST /users/:Username/movies/:MovieID
+URL: /users/:Username/movies/:MovieID
+Method: POST
 Requires JWT authentication
 Remove a movie from user's favorites
 
-DELETE /users/:Username/movies/:MovieID
+URL: /users/:Username/movies/:MovieID
+Method: DELETE
 Requires JWT authentication
 Delete user profile
 
-DELETE /users/:Username
+URL: /users/:Username
+Method: DELETE
 Requires JWT authentication
+
+Documentation
+
+The API documentation is generated using JSDoc. To view the documentation, open the out/index.html file in your browser.
+
+Generating Documentation
+To generate the documentation, run the following command:
+jsdoc -c jsdoc.json
+
 Deployment
 
 Heroku
-Log in to Heroku:
 
-heroku login
-Create a new Heroku app:
+1. Log in to Heroku:
+   heroku login
 
-heroku create
-Set up environment variables on Heroku:
+2. Create a new Heroku app:
+   heroku create
 
-heroku config:set MONGODB_URI=your_mongodb_connection_string
-Deploy the app to Heroku:
+3. Set up environment variables on Heroku:
+   heroku config:set MONGODB_URI=your_mongodb_connection_string
 
-git push heroku main
-Open the app in your browser:
+4. Deploy the app to Heroku:
+   git push heroku main or master
 
-heroku open
+5. Open the app in your browser:
+   heroku open
+
 License
 
 This project is licensed under the MIT License.
