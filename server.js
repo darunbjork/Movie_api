@@ -18,14 +18,14 @@ const Users = Models.User;
 // Middleware
 app.use(morgan('common')); // Log requests using Morgan
 app.use(express.static('public')); // Serve static files from the 'public' directory
-app.use(cors()); // Enable CORS
 
- // Define the allowed origins
- const allowedOrigins = [ 
-  'http://localhost:8080', 
-  'http://testsite.com', 
-  'http://localhost:1234', 
-  'https://silverscreenhub.netlify.app', 
+
+// Define the allowed origins
+const allowedOrigins = [
+  'http://localhost:8080',
+  'http://testsite.com',
+  'http://localhost:1234',
+  'https://silverscreenhub.netlify.app',
   'http://localhost:4200'
 ];
 
