@@ -25,7 +25,7 @@ const allowedOrigins = [
   'http://testsite.com',
   'http://localhost:1234',
   'http://localhost:4200',
-  'https://cinemahub22.netlify.app/welcome'
+  'https://cinemahub22.netlify.app'
 ];
 
 // CORS configuration
