@@ -24,7 +24,8 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://testsite.com',
   'http://localhost:1234',
-  'http://localhost:4200'
+  'http://localhost:4200',
+  'https://courageous-kringle-7aa220.netlify.app'
 ];
 
 // CORS configuration
