@@ -17,12 +17,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const Movies = Models.Movie;
+const Devices = Models.Device;
 const Users = Models.User;
 
 // Define the allowed origins
 const allowedOrigins = [
   'http://localhost:8080',
-  'http://localhost:3000', //Added this localhost 
+  'http://localhost:1234', // Add a new frontend URL here
   'http://testsite.com',
   'http://localhost:1234',
   'http://localhost:4200',
@@ -63,7 +64,7 @@ let auth = require('./auth')(app);
  * @returns {string} 200 - Welcome message
  */
 app.get('/', (req, res) => {
-  res.send('Welcome to the Movie API!');
+  res.send('Welcome to the Smart Home Automation API!');
 });
 
 /**
@@ -371,6 +372,78 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
+
+
+app.get('/devices', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const devices = await Devices.find();
+    res.status(200).json(devices);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/devices/name/:Name', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const device = await Devices.findOne({ Name: req.params.Name });
+    if (device) {
+      res.status(200).json(device);
+    } else {
+      res.status(404).json({ error: 'Device not found' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/devices/type/:Type', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const devices = await Devices.find({ Type: req.params.Type });
+    if (devices.length > 0) {
+      res.status(200).json(devices);
+    } else {
+      res.status(404).json({ error: 'No devices found for this type' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post('/devices', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const newDevice = await Devices.create(req.body);
+    res.status(201).json(newDevice);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.put('/devices/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const updatedDevice = await Devices.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (updatedDevice) {
+      res.status(200).json(updatedDevice);
+    } else {
+      res.status(404).json({ error: 'Device not found' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.delete('/devices/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const deletedDevice = await Devices.findByIdAndDelete(req.params.id);
+    if (deletedDevice) {
+      res.status(200).json({ message: 'Device deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'Device not found' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 // Simulated error route
 app.get('/error', (req, res) => {
