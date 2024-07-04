@@ -13,11 +13,15 @@ const app = express();
 const http = require('http');
 const socketIo = require('socket.io');
 
-// Create HTTP server
 const server = http.createServer(app);
-
-// Create Socket.io instance
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: 'http://localhost:1234', // Update this with your frontend origin
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Authorization'],
+    credentials: true
+  }
+});
 
 io.on('connection', (socket) => {
   console.log('New client connected');
@@ -26,7 +30,6 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -39,7 +42,6 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
   'http://testsite.com',
-  'http://localhost:1234',
   'http://localhost:4200',
   'https://cinemahub22.netlify.app',
   'https://flix-movie-hub.netlify.app'
@@ -366,7 +368,6 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 
 app.get('/error', (req, res) => {
   throw new Error('This is a simulated error.');
