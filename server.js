@@ -19,6 +19,15 @@ const server = http.createServer(app);
 // Create Socket.io instance
 const io = socketIo(server);
 
+io.on('connection', (socket) => {
+  console.log('New client connected');
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -342,6 +351,9 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     const deviceId = req.params.id;
     const newStatus = req.body.status;
 
+    console.log('Token:', req.headers.authorization); // Log the token
+    console.log('Authenticated user:', req.user); // Log the authenticated user
+
     const updatedDevice = await Devices.findByIdAndUpdate(deviceId, { Status: newStatus }, { new: true });
 
     if (updatedDevice) {
@@ -354,6 +366,7 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
+
 
 app.get('/error', (req, res) => {
   throw new Error('This is a simulated error.');
