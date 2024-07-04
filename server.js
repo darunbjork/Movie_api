@@ -1,29 +1,34 @@
-/**
- * @fileOverview This is the main server file for the movie API.
- */
-
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const SmartHomeModels = require('./smartHomeModels.js');
 const passport = require('passport');
 const cors = require('cors');
 const { check, validationResult } = require('express-validator');
-require('./passport'); // local passport file
+require('./passport');
 const app = express();
+
+const http = require('http');
+const socketIo = require('socket.io');
+
+// Create HTTP server
+const server = http.createServer(app);
+
+// Create Socket.io instance
+const io = socketIo(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const Movies = Models.Movie;
-const Devices = Models.Device;
+const Devices = SmartHomeModels.Device;
 const Users = Models.User;
 
-// Define the allowed origins
 const allowedOrigins = [
   'http://localhost:8080',
-  'http://localhost:1234', // Add a new frontend URL here
+  'http://localhost:1234',
   'http://testsite.com',
   'http://localhost:1234',
   'http://localhost:4200',
@@ -31,7 +36,6 @@ const allowedOrigins = [
   'https://flix-movie-hub.netlify.app'
 ];
 
-// CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -42,12 +46,10 @@ const corsOptions = {
   },
 };
 
-// Middleware
-app.use(morgan('common')); // Log requests using Morgan
-app.use(express.static('public')); // Serve static files from the 'public' directory
-app.use(cors(corsOptions)); // Enable CORS using the configured options
+app.use(morgan('common'));
+app.use(express.static('public'));
+app.use(cors(corsOptions));
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to the database');
@@ -58,21 +60,10 @@ mongoose.connect(process.env.MONGODB_URI)
 
 let auth = require('./auth')(app);
 
-/**
- * @route GET /
- * @group Home - Operations about home
- * @returns {string} 200 - Welcome message
- */
 app.get('/', (req, res) => {
   res.send('Welcome to the Smart Home Automation API!');
 });
 
-/**
- * @route GET /movies
- * @group Movies - Operations about movies
- * @returns {Array.<Movie>} 200 - An array of movies
- * @security JWT
- */
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find();
@@ -82,14 +73,6 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
   }
 });
 
-/**
- * @route GET /movies/title/:Title
- * @group Movies - Operations about movies
- * @param {string} Title.path.required - Movie title
- * @returns {Movie} 200 - A single movie object
- * @returns {Error} 404 - Movie not found
- * @security JWT
- */
 app.get('/movies/title/:Title', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movie = await Movies.findOne({ Title: req.params.Title });
@@ -103,14 +86,6 @@ app.get('/movies/title/:Title', passport.authenticate('jwt', { session: false })
   }
 });
 
-/**
- * @route GET /movies/genre/:Genre
- * @group Movies - Operations about movies
- * @param {string} Genre.path.required - Genre name
- * @returns {Array.<Movie>} 200 - An array of movies
- * @returns {Error} 404 - No movies found for this genre
- * @security JWT
- */
 app.get('/movies/genre/:Genre', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find({ 'Genre.Name': req.params.Genre });
@@ -124,14 +99,6 @@ app.get('/movies/genre/:Genre', passport.authenticate('jwt', { session: false })
   }
 });
 
-/**
- * @route GET /movies/director/:Director
- * @group Movies - Operations about movies
- * @param {string} Director.path.required - Director name
- * @returns {Array.<Movie>} 200 - An array of movies
- * @returns {Error} 404 - No movies found for this director
- * @security JWT
- */
 app.get('/movies/director/:Director', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find({ 'Director.Name': req.params.Director });
@@ -145,18 +112,8 @@ app.get('/movies/director/:Director', passport.authenticate('jwt', { session: fa
   }
 });
 
-/**
- * @route GET /users/:Username
- * @group Users - Operations about users
- * @param {string} Username.path.required - Username
- * @returns {User} 200 - A single user object
- * @returns {Error} 403 - Permission denied
- * @returns {Error} 404 - User not found
- * @security JWT
- */
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
-     // Ensure the user can only access their own profile
     if (req.user.Username !== req.params.Username) {
       return res.status(403).json({ error: 'Permission denied' });
     }
@@ -172,17 +129,6 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
   }
 });
 
-/**
- * @route POST /users
- * @group Users - Operations about users
- * @param {string} Username.body.required - Username
- * @param {string} Password.body.required - Password
- * @param {string} Email.body.required - Email
- * @param {string} Birthday.body - Birthday
- * @returns {User} 201 - A single user object
- * @returns {Error} 422 - Validation error
- * @returns {Error} 500 - Internal server error
- */
 app.post('/users', [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -212,20 +158,6 @@ app.post('/users', [
     .catch((error) => { res.status(500).send('Error: ' + error); });
 });
 
-/**
- * @route PUT /users/:Username
- * @group Users - Operations about users
- * @param {string} Username.path.required - Username
- * @param {string} Username.body.required - New username
- * @param {string} Password.body.required - New password
- * @param {string} Email.body.required - New email
- * @param {string} Birthday.body - New birthday
- * @returns {User} 200 - The updated user object
- * @returns {Error} 403 - Permission denied
- * @returns {Error} 422 - Validation error
- * @returns {Error} 500 - Internal server error
- * @security JWT
- */
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -247,7 +179,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
     {
       $set: {
         Username: req.body.Username,
-        Password: hashedPassword,  // Ensure password is hashed
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       }
@@ -258,16 +190,6 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
     .catch((err) => { res.status(500).send('Error: ' + err); });
 });
 
-/**
- * @route POST /users/:Username/movies/:MovieID
- * @group Users - Operations about users
- * @param {string} Username.path.required - Username
- * @param {string} MovieID.path.required - Movie ID
- * @returns {User} 200 - The updated user object
- * @returns {Error} 400 - Permission denied
- * @returns {Error} 404 - User not found
- * @security JWT
- */
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -290,15 +212,6 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
   }
 });
 
-/**
- * @route GET /users/:Username/movies
- * @group Users - Operations about users
- * @param {string} Username.path.required - Username
- * @returns {Array.<Movie>} 200 - An array of favorite movies
- * @returns {Error} 403 - Permission denied
- * @returns {Error} 404 - User not found
- * @security JWT
- */
 app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     if (req.user.Username !== req.params.Username) {
@@ -316,16 +229,6 @@ app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false
   }
 });
 
-/**
- * @route DELETE /users/:Username/movies/:MovieID
- * @group Users - Operations about users
- * @param {string} Username.path.required - Username
- * @param {string} MovieID.path.required - Movie ID
- * @returns {User} 200 - The updated user object
- * @returns {Error} 400 - Permission denied
- * @returns {Error} 404 - User not found
- * @security JWT
- */
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -348,15 +251,6 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
   }
 });
 
-/**
- * @route DELETE /users/:Username
- * @group Users - Operations about users
- * @param {string} Username.path.required - Username
- * @returns {string} 200 - A message indicating that the user was deregistered
- * @returns {Error} 400 - Permission denied
- * @returns {Error} 404 - User not found
- * @security JWT
- */
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -372,7 +266,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 
 app.get('/devices', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
@@ -444,13 +337,28 @@ app.delete('/devices/:id', passport.authenticate('jwt', { session: false }), asy
   }
 });
 
+app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const deviceId = req.params.id;
+    const newStatus = req.body.status;
 
-// Simulated error route
+    const updatedDevice = await Devices.findByIdAndUpdate(deviceId, { Status: newStatus }, { new: true });
+
+    if (updatedDevice) {
+      io.emit('deviceStatusChanged', updatedDevice);
+      res.status(200).json(updatedDevice);
+    } else {
+      res.status(404).json({ error: 'Device not found' });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/error', (req, res) => {
   throw new Error('This is a simulated error.');
 });
 
-// Error-handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
 
@@ -465,8 +373,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-// Listen for requests
 const port = process.env.PORT || 8080;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Your app is listening on port ${port}.`);
 });

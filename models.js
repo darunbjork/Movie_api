@@ -1,7 +1,7 @@
-// models.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+// Movie schema
 let movieSchema = mongoose.Schema({
   Title: { type: String, required: true },
   Description: { type: String, required: true },
@@ -18,21 +18,14 @@ let movieSchema = mongoose.Schema({
   Featured: Boolean
 });
 
-let deviceSchema = mongoose.Schema({
-  Name: { type: String, required: true },
-  Description: { type: String, required: true },
-  Status: { type: String, required: true },
-  Type: { type: String, required: true },
-  Location: { type: String, required: true }
-});
-
+// Shared User schema for both applications
 let userSchema = mongoose.Schema({
   Username: { type: String, required: true },
   Password: { type: String, required: true },
   Email: { type: String, required: true },
   Birthday: Date,
   FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
-  FavoriteDevices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }]
+  FavoriteDevices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Device' }] // Reference to devices if needed
 });
 
 // Hashing user passwords
@@ -44,10 +37,9 @@ userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.Password);
 };
 
+// Models
 let Movie = mongoose.model('Movie', movieSchema);
-let Device = mongoose.model('Device', deviceSchema);
 let User = mongoose.model('User', userSchema);
 
 module.exports.Movie = Movie;
-module.exports.Device = Device;
 module.exports.User = User;

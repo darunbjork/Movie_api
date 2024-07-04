@@ -1,9 +1,9 @@
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
-  Models = require('./models.js'),
+  Models = require('./models.js'), // Using models.js for shared User model
   passportJWT = require('passport-jwt');
 
-let Users = Models.User,
+let Users = Models.User, // Shared User model
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
@@ -55,3 +55,5 @@ passport.use(
     }
   )
 );
+
+module.exports = passport;
