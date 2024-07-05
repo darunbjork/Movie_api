@@ -41,6 +41,7 @@ const Users = Models.User;
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
+  'http://localhost:3000',
   'http://testsite.com',
   'http://localhost:4200',
   'https://cinemahub22.netlify.app',
