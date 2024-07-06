@@ -10,15 +10,23 @@ const { check, validationResult } = require('express-validator');
 require('./passport');
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('common'));
+app.use(express.static('public'));
+app.use(cors(corsOptions));
+
+let auth = require('./auth')(app);
+
 const http = require('http');
 const socketIo = require('socket.io');
 
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:3000', 
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Authorization'],
+    allowedHeaders: ['Authorization', 'my-custom-header'],
     credentials: true
   }
 });
@@ -35,10 +43,6 @@ io.on('connection', (socket) => {
 const deviceStatusUpdate = (deviceId, status) => {
   io.emit('deviceStatusUpdate', { deviceId, status });
 };
-
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const Movies = Models.Movie;
 const Devices = SmartHomeModels.Device;
@@ -62,11 +66,11 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'my-custom-header'],
+  credentials: true
 };
 
-app.use(morgan('common'));
-app.use(express.static('public'));
-app.use(cors(corsOptions));
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
@@ -75,8 +79,6 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => {
     console.error('Error connecting to the database', err);
   });
-
-let auth = require('./auth')(app);
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Smart Home Automation API!');
