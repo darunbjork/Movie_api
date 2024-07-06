@@ -16,12 +16,13 @@ const socketIo = require('socket.io');
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:1234', // Update this with your frontend origin
+    origin: 'http://localhost:3000', 
     methods: ['GET', 'POST'],
     allowedHeaders: ['Authorization'],
     credentials: true
   }
 });
+
 
 io.on('connection', (socket) => {
   console.log('New client connected');
@@ -30,6 +31,11 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
+
+const deviceStatusUpdate = (deviceId, status) => {
+  io.emit('deviceStatusUpdate', { deviceId, status });
+};
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,7 +47,7 @@ const Users = Models.User;
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
-  'http://localhost:3000',
+  'http://localhost:3000', //This is for Smart Home Automation project
   'http://testsite.com',
   'http://localhost:4200',
   'https://cinemahub22.netlify.app',
@@ -349,6 +355,7 @@ app.delete('/devices/:id', passport.authenticate('jwt', { session: false }), asy
   }
 });
 
+
 app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const deviceId = req.params.id;
@@ -360,7 +367,7 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     const updatedDevice = await Devices.findByIdAndUpdate(deviceId, { Status: newStatus }, { new: true });
 
     if (updatedDevice) {
-      io.emit('deviceStatusChanged', updatedDevice);
+      deviceStatusUpdate(deviceId, newStatus); // Emit the update through WebSocket
       res.status(200).json(updatedDevice);
     } else {
       res.status(404).json({ error: 'Device not found' });
@@ -369,6 +376,7 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
+
 
 app.get('/error', (req, res) => {
   throw new Error('This is a simulated error.');
