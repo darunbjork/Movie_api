@@ -10,42 +10,6 @@ const { check, validationResult } = require('express-validator');
 require('./passport');
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan('common'));
-app.use(express.static('public'));
-
-let auth = require('./auth')(app);
-
-const http = require('http');
-const socketIo = require('socket.io');
-
-const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: ['http://localhost:3000', 'https://myflix-movie-app-3823c24113de.herokuapp.com'],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Authorization', 'my-custom-header', 'Content-Type'],
-    credentials: true
-  }
-});
-
-io.on('connection', (socket) => {
-  console.log('New client connected');
-
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  });
-});
-
-const deviceStatusUpdate = (deviceId, status) => {
-  io.emit('deviceStatusUpdate', { deviceId, status });
-};
-
-const Movies = Models.Movie;
-const Devices = SmartHomeModels.Device;
-const Users = Models.User;
-
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
@@ -70,7 +34,52 @@ const corsOptions = {
   credentials: true
 };
 
+// Place CORS middleware at the top
 app.use(cors(corsOptions));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('common'));
+app.use(express.static('public'));
+
+// Add logging middleware to debug CORS headers
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    console.log('Response Headers:', res.getHeaders());
+  });
+  next();
+});
+
+let auth = require('./auth')(app);
+
+const http = require('http');
+const socketIo = require('socket.io');
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Authorization', 'my-custom-header', 'Content-Type'],
+    credentials: true
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('New client connected');
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+const deviceStatusUpdate = (deviceId, status) => {
+  io.emit('deviceStatusUpdate', { deviceId, status });
+};
+
+const Movies = Models.Movie;
+const Devices = SmartHomeModels.Device;
+const Users = Models.User;
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
