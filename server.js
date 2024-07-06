@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('common'));
 app.use(express.static('public'));
-app.use(cors(corsOptions));
+
 
 let auth = require('./auth')(app);
 
@@ -71,6 +71,7 @@ const corsOptions = {
   credentials: true
 };
 
+app.use(cors(corsOptions));
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
