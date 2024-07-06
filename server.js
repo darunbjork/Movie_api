@@ -15,7 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('common'));
 app.use(express.static('public'));
 
-
 let auth = require('./auth')(app);
 
 const http = require('http');
@@ -24,13 +23,12 @@ const socketIo = require('socket.io');
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://myflix-movie-app-3823c24113de.herokuapp.com'],
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Authorization', 'my-custom-header'],
+    allowedHeaders: ['Authorization', 'my-custom-header', 'Content-Type'],
     credentials: true
   }
 });
-
 
 io.on('connection', (socket) => {
   console.log('New client connected');
@@ -51,12 +49,12 @@ const Users = Models.User;
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
-  'http://localhost:3000', // This is for Smart Home Automation project
+  'http://localhost:3000',
   'http://testsite.com',
   'http://localhost:4200',
   'https://cinemahub22.netlify.app',
   'https://flix-movie-hub.netlify.app',
-  'https://myflix-movie-app-3823c24113de.herokuapp.com' 
+  'https://myflix-movie-app-3823c24113de.herokuapp.com'
 ];
 
 const corsOptions = {
@@ -73,8 +71,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
@@ -195,9 +191,9 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
-  
+
   let hashedPassword = Users.hashPassword(req.body.Password);
-  
+
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -361,7 +357,6 @@ app.delete('/devices/:id', passport.authenticate('jwt', { session: false }), asy
   }
 });
 
-
 app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const deviceId = req.params.id;
@@ -382,7 +377,6 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 
 app.get('/error', (req, res) => {
   throw new Error('This is a simulated error.');
