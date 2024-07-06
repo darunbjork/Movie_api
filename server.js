@@ -10,15 +10,38 @@ const { check, validationResult } = require('express-validator');
 require('./passport');
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:8080',
-  'http://localhost:1234',
-  'http://localhost:3000',
-  'http://testsite.com',
-  'http://localhost:4200',
-  'https://cinemahub22.netlify.app',
-  'https://flix-movie-hub.netlify.app',
-  'https://myflix-movie-app-3823c24113de.herokuapp.com'
+const http = require('http');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: 'http://localhost:1234', // Update this with your frontend origin
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Authorization'],
+    credentials: true
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const Movies = Models.Movie;
+const Devices = SmartHomeModels.Device;
+const Users = Models.User;
+ const allowedOrigins = [
+   'http://localhost:8080',
+   'http://localhost:1234',
+   'http://localhost:3000',
+   'http://testsite.com',
+   'http://localhost:4200',
+   'https://cinemahub22.netlify.app',
+  'https://flix-movie-hub.netlify.app'
 ];
 
 const corsOptions = {
@@ -29,57 +52,11 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'my-custom-header'],
-  credentials: true
 };
 
-// Place CORS middleware at the top
-app.use(cors(corsOptions));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(morgan('common'));
 app.use(express.static('public'));
-
-// Add logging middleware to debug CORS headers
-app.use((req, res, next) => {
-  res.on('finish', () => {
-    console.log('Response Headers:', res.getHeaders());
-  });
-  next();
-});
-
-let auth = require('./auth')(app);
-
-const http = require('http');
-const socketIo = require('socket.io');
-
-const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: allowedOrigins,
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Authorization', 'my-custom-header', 'Content-Type'],
-    credentials: true
-  }
-});
-
-io.on('connection', (socket) => {
-  console.log('New client connected');
-
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  });
-});
-
-const deviceStatusUpdate = (deviceId, status) => {
-  io.emit('deviceStatusUpdate', { deviceId, status });
-};
-
-const Movies = Models.Movie;
-const Devices = SmartHomeModels.Device;
-const Users = Models.User;
+app.use(cors(corsOptions));
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
@@ -88,6 +65,8 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => {
     console.error('Error connecting to the database', err);
   });
+
+let auth = require('./auth')(app);
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Smart Home Automation API!');
@@ -127,7 +106,6 @@ app.get('/movies/genre/:Genre', passport.authenticate('jwt', { session: false })
     next(err);
   }
 });
-
 app.get('/movies/director/:Director', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const movies = await Movies.find({ 'Director.Name': req.params.Director });
@@ -140,13 +118,11 @@ app.get('/movies/director/:Director', passport.authenticate('jwt', { session: fa
     next(err);
   }
 });
-
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     if (req.user.Username !== req.params.Username) {
       return res.status(403).json({ error: 'Permission denied' });
     }
-
     const user = await Users.findOne({ Username: req.params.Username });
     if (user) {
       res.status(200).json(user);
@@ -157,7 +133,6 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
     next(err);
   }
 });
-
 app.post('/users', [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -186,7 +161,6 @@ app.post('/users', [
     })
     .catch((error) => { res.status(500).send('Error: ' + error); });
 });
-
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -200,9 +174,9 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
   }
-
+  
   let hashedPassword = Users.hashPassword(req.body.Password);
-
+  
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -218,7 +192,6 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
     .then((updatedUser) => { res.json(updatedUser); })
     .catch((err) => { res.status(500).send('Error: ' + err); });
 });
-
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -240,13 +213,11 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
     next(err);
   }
 });
-
 app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     if (req.user.Username !== req.params.Username) {
       return res.status(403).json({ error: 'Permission denied' });
     }
-
     const user = await Users.findOne({ Username: req.params.Username }).populate('FavoriteMovies');
     if (user) {
       res.status(200).json(user.FavoriteMovies);
@@ -257,7 +228,6 @@ app.get('/users/:Username/movies', passport.authenticate('jwt', { session: false
     next(err);
   }
 });
-
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -279,7 +249,6 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
     next(err);
   }
 });
-
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission denied');
@@ -295,7 +264,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 app.get('/devices', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const devices = await Devices.find();
@@ -304,7 +272,6 @@ app.get('/devices', passport.authenticate('jwt', { session: false }), async (req
     next(err);
   }
 });
-
 app.get('/devices/name/:Name', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const device = await Devices.findOne({ Name: req.params.Name });
@@ -317,7 +284,6 @@ app.get('/devices/name/:Name', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 app.get('/devices/type/:Type', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const devices = await Devices.find({ Type: req.params.Type });
@@ -330,7 +296,6 @@ app.get('/devices/type/:Type', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 app.post('/devices', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const newDevice = await Devices.create(req.body);
@@ -339,7 +304,6 @@ app.post('/devices', passport.authenticate('jwt', { session: false }), async (re
     next(err);
   }
 });
-
 app.put('/devices/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const updatedDevice = await Devices.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -352,7 +316,6 @@ app.put('/devices/:id', passport.authenticate('jwt', { session: false }), async 
     next(err);
   }
 });
-
 app.delete('/devices/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const deletedDevice = await Devices.findByIdAndDelete(req.params.id);
@@ -365,19 +328,15 @@ app.delete('/devices/:id', passport.authenticate('jwt', { session: false }), asy
     next(err);
   }
 });
-
 app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const deviceId = req.params.id;
     const newStatus = req.body.status;
-
     console.log('Token:', req.headers.authorization); // Log the token
     console.log('Authenticated user:', req.user); // Log the authenticated user
-
     const updatedDevice = await Devices.findByIdAndUpdate(deviceId, { Status: newStatus }, { new: true });
-
     if (updatedDevice) {
-      deviceStatusUpdate(deviceId, newStatus); // Emit the update through WebSocket
+      io.emit('deviceStatusChanged', updatedDevice);
       res.status(200).json(updatedDevice);
     } else {
       res.status(404).json({ error: 'Device not found' });
@@ -386,14 +345,11 @@ app.put('/devices/:id/status', passport.authenticate('jwt', { session: false }),
     next(err);
   }
 });
-
 app.get('/error', (req, res) => {
   throw new Error('This is a simulated error.');
 });
-
 app.use((err, req, res, next) => {
   console.error(err.stack);
-
   if (err.name === 'ValidationError') {
     res.status(400).json({ error: `Validation Error: ${err.message}` });
   } else if (err.name === 'MongoError') {
@@ -404,7 +360,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Something broke!' });
   }
 });
-
 const port = process.env.PORT || 8080;
 server.listen(port, () => {
   console.log(`Your app is listening on port ${port}.`);
