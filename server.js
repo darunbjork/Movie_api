@@ -51,11 +51,12 @@ const Users = Models.User;
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
-  'http://localhost:3000', //This is for Smart Home Automation project
+  'http://localhost:3000', // This is for Smart Home Automation project
   'http://testsite.com',
   'http://localhost:4200',
   'https://cinemahub22.netlify.app',
-  'https://flix-movie-hub.netlify.app'
+  'https://flix-movie-hub.netlify.app',
+  'https://myflix-movie-app-3823c24113de.herokuapp.com' 
 ];
 
 const corsOptions = {
@@ -66,12 +67,14 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'my-custom-header'],
   credentials: true
 };
 
 app.use(cors(corsOptions));
+
+
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
