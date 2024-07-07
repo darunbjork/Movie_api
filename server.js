@@ -272,6 +272,26 @@ app.get('/devices', passport.authenticate('jwt', { session: false }), async (req
     next(err);
   }
 });
+
+// In your backend routes
+app.put('/devices/:id/brightness', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  const deviceId = req.params.id;
+  const { brightness } = req.body;
+
+  try {
+    const updatedDevice = await Devices.findByIdAndUpdate(deviceId, { Brightness: brightness }, { new: true });
+    if (updatedDevice) {
+      io.emit('deviceBrightnessChanged', updatedDevice);
+      res.status(200).json(updatedDevice);
+    } else {
+      res.status(404).json({ error: 'Device not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 app.get('/devices/name/:Name', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const device = await Devices.findOne({ Name: req.params.Name });
