@@ -292,6 +292,7 @@ app.put('/devices/:id/brightness', passport.authenticate('jwt', { session: false
 });
 
 
+
 app.get('/devices/name/:Name', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
   try {
     const device = await Devices.findOne({ Name: req.params.Name });

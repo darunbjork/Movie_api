@@ -1,28 +1,73 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// Device schema
-let deviceSchema = mongoose.Schema({
+const deviceSchema = new Schema({
   Name: { type: String, required: true },
-  Description: { type: String, required: true },
-  Status: { type: String, required: true },
-  Type: { type: String, required: true },
-  Location: { type: String, required: true },
-  Manufacturer: { type: String },
-  ModelNumber: { type: String },
-  FirmwareVersion: { type: String },
-  BatteryLevel: { type: String },
-  Connectivity: { type: String },
-  LastUpdated: { type: Date, default: Date.now },
+  Description: String,
+  Status: String,
+  Brightness: { type: Number, default: 50 }, // Default to 50 if not specified
+  Type: String,
+  Location: String,
+  BatteryLevel: String,
+  Connectivity: String,
+  EnergyConsumption: String,
+  FirmwareVersion: String,
+  LastUpdated: Date,
+  Manufacturer: String,
+  ModelNumber: String,
   Schedule: {
-    OnTime: { type: String },
-    OffTime: { type: String }
+    OnTime: String,
+    OffTime: String,
   },
-  EnergyConsumption: { type: String },
-  Warnings: { type: [String] },
-  ImageURL: { type: String }
+  Warnings: [String],
+  Alerts: [{
+    Type: String,
+    Threshold: String,
+    Enabled: Boolean
+  }],
+  DeviceGroups: [String],
+  DeviceStatusHistory: [{
+    Status: String,
+    Timestamp: Date
+  }],
+  EnergyUsageStatistics: {
+    Daily: String,
+    Weekly: String,
+    Monthly: String
+  },
+  FirmwareUpdateLog: [{
+    Version: String,
+    Date: Date
+  }],
+  Geolocation: {
+    Latitude: Number,
+    Longitude: Number
+  },
+  ImagePath: String,
+  IntegrationInformation: {
+    HomeAssistant: {
+      IntegrationID: String,
+      Status: String
+    },
+    GoogleHome: {
+      IntegrationID: String,
+      Status: String
+    }
+  },
+  MaintenanceSchedule: [{
+    Task: String,
+    DueDate: Date
+  }],
+  SensorData: {
+    Temperature: String,
+    Humidity: String
+  },
+  UserAccess: [{
+    Username: String,
+    AccessLevel: String
+  }]
 });
 
-// Models
-let Device = mongoose.model('Device', deviceSchema);
+const Device = mongoose.model('Device', deviceSchema);
 
-module.exports.Device = Device;
+module.exports = { Device };
